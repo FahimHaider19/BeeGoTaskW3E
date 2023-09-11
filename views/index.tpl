@@ -27,7 +27,7 @@
 				<button type="button" onclick="loadHotelUi()" class="text-gray-900 rounded-l-lg group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10" aria-current="page">
 				  <span>Hotels</span>
 				</buton>
-		  
+
 				<button type="button" onclick="loadRestaurantUi()" class="text-gray-500 hover:text-gray-700 group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10">
 				  <span>Restaurants</span>
 				  <span aria-hidden="true" class="bg-transparent absolute inset-x-0 bottom-0 h-0.5"></span>
@@ -85,7 +85,7 @@
 							<svg  class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><style>svg{fill:#5e5c64}</style><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
 						</div>
 					</div>
-					
+
 					<div id="menu-guests" class="invisible absolute flex flex-col place-items-center h-fit bg-gray-100 rounded-b-md mt-1 py-4 px-5 z-10">
 						<div class="flex justify-end items-center gap-4 w-full">
 							<div>Room:</div>

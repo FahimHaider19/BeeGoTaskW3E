@@ -1,0 +1,40 @@
+{
+    "currentPage": 1,
+    "data": {
+      "flights": [
+        {
+            "availableExtraProducts": [
+              {
+                "sellSpecification": {
+                  "sellPriceBaggage": [
+                    {
+                      "maxWeight": 23,
+                      "numberOfUnits": 1,
+                      "weightUnit": "kg"
+                    }
+                  ]
+                }
+              }
+            ],
+            "id": "362349563702125",
+            "shareableUrl": "https://flights-us.gotogate.com/air/LADPAR01OCT20OCT/1/-/-/c:Y?selectionKey=TP292-01Oct23-T_TP452-03Oct23-T_TP459-20Oct23-K_TP1927-20Oct23-K_TP287-20Oct23-K,xzi5w3",
+            "travelerPricesWithoutPaymentDiscounts": [
+              {
+                "price": {
+                  "price": {
+                    "currency": {
+                      "code": "USD"
+                    },
+                    "value": 121782
+                  },
+                  "vat": {
+                    "value": 46550
+                  }
+                }
+              }
+            ],
+            "type": "RETURN"
+          }
+      ]
+    }
+  }
