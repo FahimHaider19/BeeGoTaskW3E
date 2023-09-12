@@ -34,28 +34,28 @@ function reduceGuest() {
 
 function loadHotelUi() {
     document.getElementById('hotelui').classList.remove('hidden')
-    if(!document.getElementById('restaurantui').classList.contains('hidden'))
-        document.getElementById('restaurantui').classList.add('hidden')
     if(!document.getElementById('flightui').classList.contains('hidden'))
         document.getElementById('flightui').classList.add('hidden')
 }
 
-function loadRestaurantUi() {
-    document.getElementById('restaurantui').classList.remove('hidden')
-    if(!document.getElementById('hotelui').classList.contains('hidden'))
-        document.getElementById('hotelui').classList.add('hidden')
-    if(!document.getElementById('flightui').classList.contains('hidden'))
-        document.getElementById('flightui').classList.add('hidden')
-}
 
 function loadFlightUi() {
     document.getElementById('flightui').classList.remove('hidden')
     if(!document.getElementById('hotelui').classList.contains('hidden'))
         document.getElementById('hotelui').classList.add('hidden')
-    if(!document.getElementById('restaurantui').classList.contains('hidden'))
-        document.getElementById('restaurantui').classList.add('hidden')
 }
 
 function getHotels() {
     
+}
+
+function handleReturnDateInputField() {
+    if(document.getElementById('itineraryType').value == 'ROUND_TRIP') {
+        document.getElementById('return_date_div').classList.remove('hidden')
+        document.getElementById('departure_date_div').classList.remove('col-span-2')}
+    if(document.getElementById('itineraryType').value == 'ONE_WAY') {
+        document.getElementById('return_date_div').classList.add('hidden')
+        document.getElementById('return_date').value = ''
+        document.getElementById('departure_date_div').classList.add('col-span-2')
+    }
 }

@@ -38,3 +38,50 @@
       ]
     }
   }
+
+
+
+  {
+    "currentPage": 1,
+    "data": [
+      {
+        "basicPropertyData": {
+          "alternativeExternalReviews": {
+            "reviewsCount": 3,
+            "totalScore": 10,
+          },
+          "id": 10730973,
+          "location": {
+            "address": "8 Calle Santander",
+            "city": "Benidorm",
+          },
+          "photos": {
+            "main": {
+              "__typename": "Photo",
+              "highResJpegUrl": {
+                "__typename": "PhotoResource",
+                "relativeUrl": "/xdata/images/hotel/square600/490545471.jpg?k=254433990916bc7400c9bf8476ad8894541b590a7e3883b686f2ab2528de8c7b&o="
+              }
+            }
+          },
+        },
+        "blocks": [
+          {
+            "finalPrice": {
+              "amount": 2395.132956067064,
+              "currency": "USD"
+            },
+            "freeCancellationUntil": "2023-09-29T22:00:00Z",
+          }
+        ],
+        "matchingUnitConfigurations": {
+          "commonConfiguration": {
+            "nbBedrooms": 1,
+            "nbKitchens": 1,
+            "nbLivingrooms": 1,
+            "nbPools": 0,
+          },
+        },
+      },
+    ],
+  }

@@ -155,376 +155,13 @@
   <div class="grid place-items-center">
     <div class="max-w-7xl z-0">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center">
-            <!-- placeholder card -->
-            <div class="p-2 bg-gray-100 w-full h-full animate-pulse">
-                <div class="bg-white max-w-md h-full">
-                    <div class="relative p-2">
-                        <img class="border-8 border-white h-64 w-full object-cover bg-gray-200" src="./public/images/img1.jpeg" alt="">
-                    </div>
-                    <div class="px-4 pb-4">
-                        <div class="text-xl font-bold py-2 bg-gray-200 h-10 rounded-lg"></div>
-                        <div class="flex justify-between mt-4">
-                            <div class="">
-                                <div class="flex h-4 gap-1">
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-16 rounded-full bg-gray-200"></div>
-                                </div>
-                                <div class="h-4 w-28 bg-gray-200 my-2 rounded-lg"></div>
-                                <div class="flex gap-1 text-gray-200 mt-3">
-                                    <div class="h-4 w-20 rounded-lg bg-gray-200"></div>
-                                    <div>&gt;</div>
-                                    <div class="h-4 w-28 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <button class="flex whitespace-nowrap h-12 w-32 p-3 rounded-md text-white font-semibold bg-gray-200"></button>
-                        </div>
-                        <div class="flex justify-between">
-                            <div class="flex gap-2">
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-24 rounded-lg bg-gray-200"></div>
-                                </div>
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-32 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <div><div class="h-4 w-20 rounded-lg bg-gray-200"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- placeholder card -->
-            <div class="p-2 bg-gray-100 w-full h-full animate-pulse">
-                <div class="bg-white max-w-md h-full">
-                    <div class="relative p-2">
-                        <img class="border-8 border-white h-64 w-full object-cover bg-gray-200" src="./public/images/img1.jpeg" alt="">
-                    </div>
-                    <div class="px-4 pb-4">
-                        <div class="text-xl font-bold py-2 bg-gray-200 h-10 rounded-lg"></div>
-                        <div class="flex justify-between mt-4">
-                            <div class="">
-                                <div class="flex h-4 gap-1">
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-16 rounded-full bg-gray-200"></div>
-                                </div>
-                                <div class="h-4 w-28 bg-gray-200 my-2 rounded-lg"></div>
-                                <div class="flex gap-1 text-gray-200 mt-3">
-                                    <div class="h-4 w-20 rounded-lg bg-gray-200"></div>
-                                    <div>&gt;</div>
-                                    <div class="h-4 w-28 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <button class="flex whitespace-nowrap h-12 w-32 p-3 rounded-md text-white font-semibold bg-gray-200"></button>
-                        </div>
-                        <div class="flex justify-between">
-                            <div class="flex gap-2">
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-24 rounded-lg bg-gray-200"></div>
-                                </div>
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-32 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <div><div class="h-4 w-20 rounded-lg bg-gray-200"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- placeholder card -->
-            <div class="p-2 bg-gray-100 w-full h-full animate-pulse">
-                <div class="bg-white max-w-md h-full">
-                    <div class="relative p-2">
-                        <img class="border-8 border-white h-64 w-full object-cover bg-gray-200" src="./public/images/img1.jpeg" alt="">
-                    </div>
-                    <div class="px-4 pb-4">
-                        <div class="text-xl font-bold py-2 bg-gray-200 h-10 rounded-lg"></div>
-                        <div class="flex justify-between mt-4">
-                            <div class="">
-                                <div class="flex h-4 gap-1">
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-16 rounded-full bg-gray-200"></div>
-                                </div>
-                                <div class="h-4 w-28 bg-gray-200 my-2 rounded-lg"></div>
-                                <div class="flex gap-1 text-gray-200 mt-3">
-                                    <div class="h-4 w-20 rounded-lg bg-gray-200"></div>
-                                    <div>&gt;</div>
-                                    <div class="h-4 w-28 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <button class="flex whitespace-nowrap h-12 w-32 p-3 rounded-md text-white font-semibold bg-gray-200"></button>
-                        </div>
-                        <div class="flex justify-between">
-                            <div class="flex gap-2">
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-24 rounded-lg bg-gray-200"></div>
-                                </div>
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-32 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <div><div class="h-4 w-20 rounded-lg bg-gray-200"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- placeholder card -->
-            <div class="p-2 bg-gray-100 w-full h-full animate-pulse">
-                <div class="bg-white max-w-md h-full">
-                    <div class="relative p-2">
-                        <img class="border-8 border-white h-64 w-full object-cover bg-gray-200" src="./public/images/img1.jpeg" alt="">
-                    </div>
-                    <div class="px-4 pb-4">
-                        <div class="text-xl font-bold py-2 bg-gray-200 h-10 rounded-lg"></div>
-                        <div class="flex justify-between mt-4">
-                            <div class="">
-                                <div class="flex h-4 gap-1">
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-16 rounded-full bg-gray-200"></div>
-                                </div>
-                                <div class="h-4 w-28 bg-gray-200 my-2 rounded-lg"></div>
-                                <div class="flex gap-1 text-gray-200 mt-3">
-                                    <div class="h-4 w-20 rounded-lg bg-gray-200"></div>
-                                    <div>&gt;</div>
-                                    <div class="h-4 w-28 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <button class="flex whitespace-nowrap h-12 w-32 p-3 rounded-md text-white font-semibold bg-gray-200"></button>
-                        </div>
-                        <div class="flex justify-between">
-                            <div class="flex gap-2">
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-24 rounded-lg bg-gray-200"></div>
-                                </div>
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-32 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <div><div class="h-4 w-20 rounded-lg bg-gray-200"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- placeholder card -->
-            <div class="p-2 bg-gray-100 w-full h-full animate-pulse">
-                <div class="bg-white max-w-md h-full">
-                    <div class="relative p-2">
-                        <img class="border-8 border-white h-64 w-full object-cover bg-gray-200" src="./public/images/img1.jpeg" alt="">
-                    </div>
-                    <div class="px-4 pb-4">
-                        <div class="text-xl font-bold py-2 bg-gray-200 h-10 rounded-lg"></div>
-                        <div class="flex justify-between mt-4">
-                            <div class="">
-                                <div class="flex h-4 gap-1">
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-16 rounded-full bg-gray-200"></div>
-                                </div>
-                                <div class="h-4 w-28 bg-gray-200 my-2 rounded-lg"></div>
-                                <div class="flex gap-1 text-gray-200 mt-3">
-                                    <div class="h-4 w-20 rounded-lg bg-gray-200"></div>
-                                    <div>&gt;</div>
-                                    <div class="h-4 w-28 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <button class="flex whitespace-nowrap h-12 w-32 p-3 rounded-md text-white font-semibold bg-gray-200"></button>
-                        </div>
-                        <div class="flex justify-between">
-                            <div class="flex gap-2">
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-24 rounded-lg bg-gray-200"></div>
-                                </div>
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-32 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <div><div class="h-4 w-20 rounded-lg bg-gray-200"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- placeholder card -->
-            <div class="p-2 bg-gray-100 w-full h-full animate-pulse">
-                <div class="bg-white max-w-md h-full">
-                    <div class="relative p-2">
-                        <img class="border-8 border-white h-64 w-full object-cover bg-gray-200" src="./public/images/img1.jpeg" alt="">
-                    </div>
-                    <div class="px-4 pb-4">
-                        <div class="text-xl font-bold py-2 bg-gray-200 h-10 rounded-lg"></div>
-                        <div class="flex justify-between mt-4">
-                            <div class="">
-                                <div class="flex h-4 gap-1">
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-16 rounded-full bg-gray-200"></div>
-                                </div>
-                                <div class="h-4 w-28 bg-gray-200 my-2 rounded-lg"></div>
-                                <div class="flex gap-1 text-gray-200 mt-3">
-                                    <div class="h-4 w-20 rounded-lg bg-gray-200"></div>
-                                    <div>&gt;</div>
-                                    <div class="h-4 w-28 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <button class="flex whitespace-nowrap h-12 w-32 p-3 rounded-md text-white font-semibold bg-gray-200"></button>
-                        </div>
-                        <div class="flex justify-between">
-                            <div class="flex gap-2">
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-24 rounded-lg bg-gray-200"></div>
-                                </div>
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-32 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <div><div class="h-4 w-20 rounded-lg bg-gray-200"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- placeholder card -->
-            <div class="p-2 bg-gray-100 w-full h-full animate-pulse">
-                <div class="bg-white max-w-md h-full">
-                    <div class="relative p-2">
-                        <img class="border-8 border-white h-64 w-full object-cover bg-gray-200" src="./public/images/img1.jpeg" alt="">
-                    </div>
-                    <div class="px-4 pb-4">
-                        <div class="text-xl font-bold py-2 bg-gray-200 h-10 rounded-lg"></div>
-                        <div class="flex justify-between mt-4">
-                            <div class="">
-                                <div class="flex h-4 gap-1">
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-16 rounded-full bg-gray-200"></div>
-                                </div>
-                                <div class="h-4 w-28 bg-gray-200 my-2 rounded-lg"></div>
-                                <div class="flex gap-1 text-gray-200 mt-3">
-                                    <div class="h-4 w-20 rounded-lg bg-gray-200"></div>
-                                    <div>&gt;</div>
-                                    <div class="h-4 w-28 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <button class="flex whitespace-nowrap h-12 w-32 p-3 rounded-md text-white font-semibold bg-gray-200"></button>
-                        </div>
-                        <div class="flex justify-between">
-                            <div class="flex gap-2">
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-24 rounded-lg bg-gray-200"></div>
-                                </div>
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-32 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <div><div class="h-4 w-20 rounded-lg bg-gray-200"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- placeholder card -->
-            <div class="p-2 bg-gray-100 w-full h-full animate-pulse">
-                <div class="bg-white max-w-md h-full">
-                    <div class="relative p-2">
-                        <img class="border-8 border-white h-64 w-full object-cover bg-gray-200" src="./public/images/img1.jpeg" alt="">
-                    </div>
-                    <div class="px-4 pb-4">
-                        <div class="text-xl font-bold py-2 bg-gray-200 h-10 rounded-lg"></div>
-                        <div class="flex justify-between mt-4">
-                            <div class="">
-                                <div class="flex h-4 gap-1">
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-16 rounded-full bg-gray-200"></div>
-                                </div>
-                                <div class="h-4 w-28 bg-gray-200 my-2 rounded-lg"></div>
-                                <div class="flex gap-1 text-gray-200 mt-3">
-                                    <div class="h-4 w-20 rounded-lg bg-gray-200"></div>
-                                    <div>&gt;</div>
-                                    <div class="h-4 w-28 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <button class="flex whitespace-nowrap h-12 w-32 p-3 rounded-md text-white font-semibold bg-gray-200"></button>
-                        </div>
-                        <div class="flex justify-between">
-                            <div class="flex gap-2">
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-24 rounded-lg bg-gray-200"></div>
-                                </div>
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-32 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <div><div class="h-4 w-20 rounded-lg bg-gray-200"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- placeholder card -->
-            <div class="p-2 bg-gray-100 w-full h-full animate-pulse">
-                <div class="bg-white max-w-md h-full">
-                    <div class="relative p-2">
-                        <img class="border-8 border-white h-64 w-full object-cover bg-gray-200" src="./public/images/img1.jpeg" alt="">
-                    </div>
-                    <div class="px-4 pb-4">
-                        <div class="text-xl font-bold py-2 bg-gray-200 h-10 rounded-lg"></div>
-                        <div class="flex justify-between mt-4">
-                            <div class="">
-                                <div class="flex h-4 gap-1">
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-4 rounded-full bg-gray-200"></div>
-                                    <div class="h-4 w-16 rounded-full bg-gray-200"></div>
-                                </div>
-                                <div class="h-4 w-28 bg-gray-200 my-2 rounded-lg"></div>
-                                <div class="flex gap-1 text-gray-200 mt-3">
-                                    <div class="h-4 w-20 rounded-lg bg-gray-200"></div>
-                                    <div>&gt;</div>
-                                    <div class="h-4 w-28 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <button class="flex whitespace-nowrap h-12 w-32 p-3 rounded-md text-white font-semibold bg-gray-200"></button>
-                        </div>
-                        <div class="flex justify-between">
-                            <div class="flex gap-2">
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-24 rounded-lg bg-gray-200"></div>
-                                </div>
-                                <div class="flex gap-1">
-                                    <div class="h-4 w-32 rounded-lg bg-gray-200"></div>
-                                </div>
-                            </div>
-                            <div><div class="h-4 w-20 rounded-lg bg-gray-200"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{range .Hotels}}
             <!-- card -->
-            <!-- <div class="p-2 bg-gray-100 w-full h-full animate-pulse">
+            <div class="p-2 bg-gray-100 w-full h-full">
                 <div class="bg-white max-w-md h-full">
                     <div class="relative p-2 bg-w">
-                        <a href="#" class="absolute p-2 text-sm rounded-md flex gap-2 right-6 top-6 bg-white opacity-80">
-                            More Photos
-                            <img class="h-5" src="./public/icons/external-link-50.png" alt="">
-                        </a>
                         <div class="absolute w-full px-3 flex justify-between bottom-6 h-8 flex">
-                            <div class="p-2 text-sm rounded-md bg-white">From $ 13,643</div>
+                            <div class="p-2 text-sm rounded-md bg-white">From {{.Price}}{{.Currency}}</div>
                             <div class="flex gap-1 pr-6">
                                 <a href="#" class="p-1 bg-gray-700 opacity-80 rounded-md">
                                     <img class="h-6" src="./public/icons/love.png" alt="">
@@ -534,43 +171,45 @@
                                 </a>
                             </div>
                         </div>
-                        <img class="border-8 border-white h-64 w-full object-cover" src="./public/images/img2.jpeg" alt="">
+                        <img class="border-8 border-white h-64 w-full object-cover" src={{.Photo}} alt="">
                     </div>
                     <div class="px-4 pb-4">
                         <div class="text-xl font-bold py-2">Bluegreen Vacations Cibola Vista and Spa an Ascend Resort</div>
                         <div class="flex justify-between mt-4">
                             <div class="">
                                 <div class="flex h-4 gap-1">
-                                    <img src="./public/icons/star-filled.png">
-                                    <img src="./public/icons/star-filled.png">
-                                    <img src="./public/icons/star-filled.png">
-                                    <img src="./public/icons/star-filled.png">
-                                    <img src="./public/icons/star-blank.png">
-                                    <div class="px-1">309 Reviews</div>
+                                    <div>Free Cancellation Unitl: {{.FreeCancellationUntil}}</div>
                                 </div>
                                 <div>Sleeps 44</div>
                                 <div class="flex gap-1 text-cyan-700 mt-3">
-                                    <a href="#">Central Arizona</a>
+                                    <a href="#">{{.Location}}</a>
                                     <div>&gt;</div>
-                                    <a href="#">Sun City West</a>
+                                    <a href="#">{{.City}}</a>
                                 </div>
                             </div>
                             <button class="flex whitespace-nowrap h-fit p-3 rounded-md text-white font-semibold bg-amber-500"> View Details</button>
                         </div>
-                        <div class="flex justify-between">
-                            <div class="flex gap-2">
-                                <div class="flex gap-1">
-                                    <img class="h-5" src="./public/icons/tick.png" alt="">View
+                        <div class="flex">
+                            <div class="flex justify-between">
+                                <div class="flex">
+                                    Beds: {{.Bed}}
                                 </div>
-                                <div class="flex gap-1">
-                                    <img class="h-5" src="./public/icons/tick.png" alt="">Child Friendly
+                                <div class="flex">
+                                    Kitchen: {{.Kitchen}}
+                                </div>
+                                <div class="flex">
+                                    Livingroom: {{.Livingroom}}
+                                </div>
+                                <div class="flex">
+                                    Pools: {{.Pool}}
                                 </div>
                             </div>
-                            <div>BC-367639</div>
+                            
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
+            {{end}}
         </div>
     </div>
   </div>
