@@ -76,11 +76,12 @@ func (c *HotelController) Get() {
 		for _, v := range data.Data {
 			hotel := models.Hotel{}
 			hotel.Id = v.BasicPropertyData.ID
+			hotel.Name = v.DisplayName.Text
 			hotel.Location = v.BasicPropertyData.Location.Address
 			hotel.City = v.BasicPropertyData.Location.City
 			hotel.Photo = "https://cf.bstatic.com" + v.BasicPropertyData.Photos.Main.HighResJpegUrl.RelativeUrl
-			hotel.Reviews = v.BasicPropertyData.AlternativeExternalReviews.ReviewsCount
-			hotel.Rating = float32(v.BasicPropertyData.AlternativeExternalReviews.TotalScore) / float32(v.BasicPropertyData.AlternativeExternalReviews.ReviewsCount)
+			hotel.Reviews = v.BasicPropertyData.Reviews.ReviewsCount
+			hotel.Rating = v.BasicPropertyData.StarRating.Value
 			hotel.Price = v.Blocks[0].FinalPrice.Amount
 			hotel.Currency = v.Blocks[0].FinalPrice.Currency
 			hotel.FreeCancellationUntil = v.Blocks[0].FreeCancellationUntil
@@ -88,6 +89,7 @@ func (c *HotelController) Get() {
 			hotel.Kitchen = v.MatchingUnitConfigurations.CommonConfiguration.NbKitchens
 			hotel.Livingroom = v.MatchingUnitConfigurations.CommonConfiguration.NbLivingrooms
 			hotel.Pool = v.MatchingUnitConfigurations.CommonConfiguration.NbPools
+			hotel.NonStarRating = 5 - v.BasicPropertyData.StarRating.Value
 			hotelData.Hotels = append(hotelData.Hotels, hotel)
 		}
 

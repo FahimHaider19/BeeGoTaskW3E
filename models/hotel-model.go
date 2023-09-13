@@ -19,19 +19,18 @@ type Location struct {
 
 type Reviews struct {
 	ReviewsCount int `json:"reviewsCount"`
-	TotalScore   int `json:"totalScore"`
 }
 
-type AlternativeExternalReviews struct {
-	ReviewsCount int `json:"reviewsCount"`
-	TotalScore   int `json:"totalScore"`
+type StarRating struct {
+	Value int `json:"value"`
 }
 
 type BasicPropertyData struct {
-	AlternativeExternalReviews AlternativeExternalReviews `json:"alternativeExternalReviews"`
-	ID                         int                        `json:"id"`
-	Location                   Location                   `json:"location"`
-	Photos                     Photo                      `json:"photos"`
+	Reviews    Reviews    `json:"Reviews"`
+	ID         int        `json:"id"`
+	Location   Location   `json:"location"`
+	Photos     Photo      `json:"photos"`
+	StarRating StarRating `json:"starRating"`
 }
 
 type FinalPrice struct {
@@ -55,10 +54,15 @@ type MatchingUnitConfigurations struct {
 	CommonConfiguration CommonConfiguration `json:"commonConfiguration"`
 }
 
+type DisplayName struct {
+	Text string `json:"text"`
+}
+
 type Item struct {
 	BasicPropertyData          BasicPropertyData          `json:"basicPropertyData"`
 	Blocks                     []Block                    `json:"blocks"`
 	MatchingUnitConfigurations MatchingUnitConfigurations `json:"matchingUnitConfigurations"`
+	DisplayName                DisplayName                `json:"displayName"`
 }
 
 type HotelStruct struct {
@@ -68,7 +72,8 @@ type HotelStruct struct {
 
 type Hotel struct {
 	Id                    int
-	Rating                float32
+	Name                  string
+	Rating                int
 	Reviews               int
 	Location              string
 	City                  string
@@ -80,6 +85,7 @@ type Hotel struct {
 	Kitchen               int
 	Livingroom            int
 	Pool                  int
+	NonStarRating         int
 }
 
 type HotelData struct {
