@@ -76,13 +76,14 @@ func (c *HotelController) Get() {
 		for _, v := range data.Data {
 			hotel := models.Hotel{}
 			hotel.Id = v.BasicPropertyData.ID
+			hotel.IdDetail = v.IdDetail
 			hotel.Name = v.DisplayName.Text
 			hotel.Location = v.BasicPropertyData.Location.Address
 			hotel.City = v.BasicPropertyData.Location.City
 			hotel.Photo = "https://cf.bstatic.com" + v.BasicPropertyData.Photos.Main.HighResJpegUrl.RelativeUrl
 			hotel.Reviews = v.BasicPropertyData.Reviews.ReviewsCount
 			hotel.Rating = v.BasicPropertyData.StarRating.Value
-			hotel.Price = v.Blocks[0].FinalPrice.Amount
+			hotel.Price = fmt.Sprintf("%.2f", v.Blocks[0].FinalPrice.Amount)
 			hotel.Currency = v.Blocks[0].FinalPrice.Currency
 			hotel.FreeCancellationUntil = v.Blocks[0].FreeCancellationUntil
 			hotel.Bed = v.MatchingUnitConfigurations.CommonConfiguration.NbBedrooms
@@ -143,4 +144,15 @@ func (c *SearchHotelController) Get() {
 
 	}
 	c.ServeJSON()
+}
+
+type HotelDetailsController struct {
+	beego.Controller
+}
+
+func (c *HotelDetailsController) Get() {
+	param := c.Ctx.Request.RequestURI
+	param = param[14:]
+	fmt.Println(param)
+	c.TplName = "hotel-detail.tpl"
 }

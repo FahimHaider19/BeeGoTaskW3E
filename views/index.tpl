@@ -115,8 +115,10 @@
 			<div class="absolute -bottom-6 w-full grid place-items-center">			
 				<button type="submit" class="w-full max-w-xl -mt-6 rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Search</button>
 			</div>
+			{{ range $i, $rating := until 5 }}
+				{{ $i }}
+			{{ end }}
 		</form>
-
 	</div>
 </body>
 </html>

@@ -63,6 +63,7 @@ type Item struct {
 	Blocks                     []Block                    `json:"blocks"`
 	MatchingUnitConfigurations MatchingUnitConfigurations `json:"matchingUnitConfigurations"`
 	DisplayName                DisplayName                `json:"displayName"`
+	IdDetail                   string                     `json:"idDetail"`
 }
 
 type HotelStruct struct {
@@ -72,13 +73,14 @@ type HotelStruct struct {
 
 type Hotel struct {
 	Id                    int
+	IdDetail              string
 	Name                  string
 	Rating                int
 	Reviews               int
 	Location              string
 	City                  string
 	Photo                 string
-	Price                 float64
+	Price                 string
 	Currency              string
 	FreeCancellationUntil string
 	Bed                   int
