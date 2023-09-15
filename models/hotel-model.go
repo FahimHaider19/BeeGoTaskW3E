@@ -26,7 +26,7 @@ type StarRating struct {
 }
 
 type BasicPropertyData struct {
-	Reviews    Reviews    `json:"Reviews"`
+	Reviews    Reviews    `json:"reviews"`
 	ID         int        `json:"id"`
 	Location   Location   `json:"location"`
 	Photos     Photo      `json:"photos"`
@@ -79,7 +79,7 @@ type Hotel struct {
 	Reviews               int
 	Location              string
 	City                  string
-	Photo                 string
+	Photos                string
 	Price                 string
 	Currency              string
 	FreeCancellationUntil string
@@ -88,6 +88,8 @@ type Hotel struct {
 	Livingroom            int
 	Pool                  int
 	NonStarRating         int
+	CheckinDate           string
+	CheckoutDate          string
 }
 
 type HotelData struct {
@@ -97,4 +99,76 @@ type HotelData struct {
 	Hotels    []Hotel
 	JsonChan  chan string
 	ErrorChan chan error
+}
+
+// Hotel Details
+type Property struct {
+	ID       int `json:"id"`
+	Location struct {
+		City string `json:"city"`
+	} `json:"location"`
+	Name string `json:"name"`
+}
+
+type Review struct {
+	GuestName     string `json:"guestName"`
+	NegativeText  string `json:"negativeText"`
+	PositiveText  string `json:"positiveText"`
+	Title         string `json:"title"`
+	UserAvatarURL string `json:"userAvatarUrl"`
+}
+
+type RTRoomPhoto struct {
+	PhotoUrl string `json:"photoUri"`
+}
+
+type Data struct {
+	BasicPropertyData []Property    `json:"BasicPropertyData"`
+	FeaturedReview    []Review      `json:"FeaturedReview"`
+	RTRoomPhotos      []RTRoomPhoto `json:"RTRoomPhoto"`
+}
+
+type HotelDetailsResponse struct {
+	Data Data `json:"data"`
+}
+
+type HotelDetailsData struct {
+	Id           int
+	CheckinDate  string
+	CheckoutDate string
+	IdDetail     string
+	Name         string
+	Description  string
+	Facilities   []string
+	Photos       []string
+	Price        string
+	Reviews      []Review
+	Error        error
+	JsonChan     chan string
+}
+
+type Description struct {
+	Data []struct {
+		Description string `json:"description"`
+	} `json:"data"`
+}
+
+type DescriptionData struct {
+	IdDetail string
+	JsonChan chan string
+	Error    error
+}
+
+type HotelPhotos struct {
+	Data struct {
+		Photos []struct {
+			PhotoUri string `json:"photoUri"`
+		} `json:"photos"`
+	} `json:"data"`
+}
+
+type HotelPhotoData struct {
+	IdDetail string
+	JsonChan chan string
+	Error    error
 }

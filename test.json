@@ -90,3 +90,26 @@
   }
 
 
+  
+  {
+    "data": {
+      "BasicPropertyData": [
+        {
+          "id": 10077992,
+          "location": {
+            "city": "Benidorm",
+          },
+          "name": "Apartamento “La Guapa” Benidorm!",
+        }
+      ],
+      "FeaturedReview": [
+        {
+          "guestName": "Pearl",
+          "negativeText": "Shower ! Freezing cold mostly, sometimes a little hot water but it was so hot seemed not to be able to regulate it ! But was mainly freezing!",
+          "positiveText": "Location was absolutely brilliant . Everything so close ! In walking distance never had to use car all weekend!",
+          "title": "Loved the apartment, very clean , would stay again",
+          "userAvatarUrl": "https://xx.bstatic.com/static/img/review/avatars/ava-p.png",
+        },
+      ],
+    },
+  }

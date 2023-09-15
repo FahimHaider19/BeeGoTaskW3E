@@ -195,7 +195,7 @@
                   <svg class="fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" height="1.15em" viewBox="0 0 384 512"><style>svg{fill:#5e5c64}</style><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg> 
                   <span class="text-gray-700 text-xs px-2 truncate">{{.Location}}, {{.City}}</span>
                 </div>
-                <a href="/hotel/details/{{.IdDetail}}" class="flex justify-center py-2">
+                <a href="/hotel/details/{{.IdDetail}}?checkin_date={{.CheckinDate}}&checkout_date={{.CheckoutDate}}" class="flex justify-center py-2">
                   <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">View Details</button>
                 </a>
               </div>

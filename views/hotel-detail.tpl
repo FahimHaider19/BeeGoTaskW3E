@@ -13,22 +13,22 @@
       <!-- Image gallery -->
       <div class="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl grid-cols-4 lg:gap-x-8 lg:px-8">
         <div class="aspect-[4/3] overflow-hidden rounded-lg lg:block col-span-2 h-full">
-          <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg" alt="Two each of gray, white, and black shirts laying flat." class="h-full w-full object-cover object-center">
+          <img src="{{index .Photos 0}}" alt="Two each of gray, white, and black shirts laying flat." class="h-full w-full object-cover object-center">
         </div>
         <div class="lg:grid lg:grid-cols-1 lg:gap-y-8">
           <div class="aspect-[4/3] overflow-hidden rounded-lg">
-            <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg" alt="Model wearing plain black basic tee." class="h-full w-full object-cover object-center">
+            <img src="{{index .Photos 1}}" class="h-full w-full object-cover object-center">
           </div>
           <div class="aspect-[4/3] overflow-hidden rounded-lg">
-            <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg" alt="Model wearing plain gray basic tee." class="h-full w-full object-cover object-center">
+            <img src="{{index .Photos 2}}" alt="Model wearing plain gray basic tee." class="h-full w-full object-cover object-center">
           </div>
         </div>
         <div class="lg:grid lg:grid-cols-1 lg:gap-y-8">
             <div class="aspect-[4/3] overflow-hidden rounded-lg">
-              <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg" alt="Model wearing plain black basic tee." class="h-full w-full object-cover object-center">
+              <img src="{{index .Photos 3}}" alt="Model wearing plain black basic tee." class="h-full w-full object-cover object-center">
             </div>
             <div class="aspect-[4/3] overflow-hidden rounded-lg">
-              <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg" alt="Model wearing plain gray basic tee." class="h-full w-full object-cover object-center">
+              <img src="{{index .Photos 4}}" alt="Model wearing plain gray basic tee." class="h-full w-full object-cover object-center">
             </div>
         </div>
       </div>
@@ -48,7 +48,7 @@
             <h3 class="sr-only">Description</h3>
   
             <div class="space-y-6">
-              <p class="text-base text-gray-900">The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: &quot;Black&quot;. Need to add an extra pop of color to your outfit? Our white tee has you covered.</p>
+              <p class="text-base text-gray-900">{{.Description}}</p>
             </div>
           </div>
   

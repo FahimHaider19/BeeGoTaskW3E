@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	beego "github.com/beego/beego/v2/server/web"
 )
@@ -80,7 +81,7 @@ func (c *HotelController) Get() {
 			hotel.Name = v.DisplayName.Text
 			hotel.Location = v.BasicPropertyData.Location.Address
 			hotel.City = v.BasicPropertyData.Location.City
-			hotel.Photo = "https://cf.bstatic.com" + v.BasicPropertyData.Photos.Main.HighResJpegUrl.RelativeUrl
+			hotel.Photos = "https://cf.bstatic.com" + v.BasicPropertyData.Photos.Main.HighResJpegUrl.RelativeUrl
 			hotel.Reviews = v.BasicPropertyData.Reviews.ReviewsCount
 			hotel.Rating = v.BasicPropertyData.StarRating.Value
 			hotel.Price = fmt.Sprintf("%.2f", v.Blocks[0].FinalPrice.Amount)
@@ -91,6 +92,8 @@ func (c *HotelController) Get() {
 			hotel.Livingroom = v.MatchingUnitConfigurations.CommonConfiguration.NbLivingrooms
 			hotel.Pool = v.MatchingUnitConfigurations.CommonConfiguration.NbPools
 			hotel.NonStarRating = 5 - v.BasicPropertyData.StarRating.Value
+			hotel.CheckinDate = hotelCheckInDate
+			hotel.CheckoutDate = hotelCheckOutDate
 			hotelData.Hotels = append(hotelData.Hotels, hotel)
 		}
 
@@ -146,13 +149,155 @@ func (c *SearchHotelController) Get() {
 	c.ServeJSON()
 }
 
+func GetHotelDescription(descriptionData models.DescriptionData) {
+	url := "https://booking-com13.p.rapidapi.com/stays/properties/detail/description?id_detail=cr%2Fla-buena-vida-cabinas&language_code=en-us"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("X-RapidAPI-Key", "5edba99934msh65cfd2d65b8987ap11e232jsneeea5dee9112")
+	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+	jsonString := string(body)
+
+	descriptionData.JsonChan <- jsonString
+}
+
+type HotelPhotosController struct {
+	beego.Controller
+}
+
+func GetHotelPhotos(hotelPhotoData models.HotelPhotoData) {
+	url := "https://booking-com13.p.rapidapi.com/stays/properties/detail/photos?id_detail=%s&language_code=en-us"
+	url = fmt.Sprintf(url, hotelPhotoData.IdDetail)
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("X-RapidAPI-Key", "5edba99934msh65cfd2d65b8987ap11e232jsneeea5dee9112")
+	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+
+	jsonString := string(body)
+
+	hotelPhotoData.JsonChan <- jsonString
+}
+
+func GetHotelDetails(hotelDetails models.HotelDetailsData) {
+
+	url := "https://booking-com13.p.rapidapi.com/stays/properties/detail?id_detail=%s&checkin_date=%s&checkout_date=%s&language_code=en-us&currency_code=USD"
+	url = fmt.Sprintf(url, hotelDetails.IdDetail, hotelDetails.CheckinDate, hotelDetails.CheckoutDate)
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("X-RapidAPI-Key", "5edba99934msh65cfd2d65b8987ap11e232jsneeea5dee9112")
+	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+	jsonString := string(body)
+
+	hotelDetails.JsonChan <- jsonString
+}
+
 type HotelDetailsController struct {
 	beego.Controller
 }
 
 func (c *HotelDetailsController) Get() {
 	param := c.Ctx.Request.RequestURI
-	param = param[14:]
-	fmt.Println(param)
+	param = param[15:]
+	param, _, _ = strings.Cut(param, "?")
+	checkinDate := c.GetString("checkin_date")
+	checkoutDate := c.GetString("checkout_date")
+
+	description := models.Description{}
+	descriptionChan := make(chan string)
+	descriptionData := models.DescriptionData{}
+	descriptionData.IdDetail = param
+	descriptionData.JsonChan = descriptionChan
+
+	go GetHotelDescription(descriptionData)
+	jsonString := <-descriptionChan
+
+	err := json.Unmarshal([]byte(jsonString), &description)
+	if err != nil {
+		c.Data["error"] = models.ErrorMessage{
+			Message:    "Error unmarshaling JSON",
+			SubMessage: "Please try again later",
+			Code:       500,
+		}
+		c.TplName = "error.tpl"
+		return
+	}
+
+	hotelDetailsResponse := models.HotelDetailsResponse{}
+	hotelDetailsData := models.HotelDetailsData{}
+	jsonChan := make(chan string)
+	hotelDetailsData.JsonChan = jsonChan
+	hotelDetailsData.Error = nil
+	hotelDetailsData.IdDetail = param
+	hotelDetailsData.CheckinDate = checkinDate
+	hotelDetailsData.CheckoutDate = checkoutDate
+	hotelDetailsData.Description = description.Data[0].Description
+
+	go GetHotelDetails(hotelDetailsData)
+	jsonString = <-jsonChan
+
+	err = json.Unmarshal([]byte(jsonString), &hotelDetailsResponse)
+	if err != nil {
+		c.Data["error"] = models.ErrorMessage{
+			Message:    "Error unmarshaling JSON",
+			SubMessage: "Please try again later",
+			Code:       500,
+		}
+		c.TplName = "error.tpl"
+		return
+	}
+
+	hotelDetailsData.Id = hotelDetailsResponse.Data.BasicPropertyData[0].ID
+	hotelDetailsData.Name = hotelDetailsResponse.Data.BasicPropertyData[0].Name
+	hotelDetailsData.Photos = []string{}
+	hotelDetailsData.Reviews = []models.Review{}
+	for _, v := range hotelDetailsResponse.Data.FeaturedReview {
+		review := models.Review{}
+		review.GuestName = v.GuestName
+		review.NegativeText = v.NegativeText
+		review.PositiveText = v.PositiveText
+		review.Title = v.Title
+		review.UserAvatarURL = v.UserAvatarURL
+		hotelDetailsData.Reviews = append(hotelDetailsData.Reviews, review)
+	}
+
+	hotelPhotosData := models.HotelPhotoData{}
+	hotelPhotosData.IdDetail = param
+	hotelPhotosData.JsonChan = jsonChan
+
+	go GetHotelPhotos(hotelPhotosData)
+	jsonString = <-hotelPhotosData.JsonChan
+
+	hotelPhotos := models.HotelPhotos{}
+	err = json.Unmarshal([]byte(jsonString), &hotelPhotos)
+	if err != nil {
+		c.Data["error"] = models.ErrorMessage{
+			Message:    "Error unmarshaling JSON",
+			SubMessage: "Please try again later",
+			Code:       500,
+		}
+		c.TplName = "error.tpl"
+		return
+	}
+
+	for _, v := range hotelPhotos.Data.Photos {
+		hotelDetailsData.Photos = append(hotelDetailsData.Photos, v.PhotoUri)
+	}
+
+	c.Data["Data"] = hotelDetailsData
 	c.TplName = "hotel-detail.tpl"
 }
