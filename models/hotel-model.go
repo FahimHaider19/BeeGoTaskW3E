@@ -79,7 +79,8 @@ type Hotel struct {
 	Reviews               int
 	Location              string
 	City                  string
-	Photos                string
+	Photo                 string
+	Photos                []string
 	Price                 string
 	Currency              string
 	FreeCancellationUntil string

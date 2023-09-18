@@ -17,7 +17,7 @@ func fetchHotel(data models.HotelData) {
 	print(url)
 
 	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Add("X-RapidAPI-Key", "5edba99934msh65cfd2d65b8987ap11e232jsneeea5dee9112")
+	req.Header.Add("X-RapidAPI-Key", "ba649e048bmsh7ad4f3caa0a03acp1b0912jsnf28f9b55b322")
 	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
 	res, _ := http.DefaultClient.Do(req)
 	defer res.Body.Close()
@@ -81,7 +81,7 @@ func (c *HotelController) Get() {
 			hotel.Name = v.DisplayName.Text
 			hotel.Location = v.BasicPropertyData.Location.Address
 			hotel.City = v.BasicPropertyData.Location.City
-			hotel.Photos = "https://cf.bstatic.com" + v.BasicPropertyData.Photos.Main.HighResJpegUrl.RelativeUrl
+			hotel.Photo = "https://cf.bstatic.com" + v.BasicPropertyData.Photos.Main.HighResJpegUrl.RelativeUrl
 			hotel.Reviews = v.BasicPropertyData.Reviews.ReviewsCount
 			hotel.Rating = v.BasicPropertyData.StarRating.Value
 			hotel.Price = fmt.Sprintf("%.2f", v.Blocks[0].FinalPrice.Amount)
@@ -154,7 +154,7 @@ func GetHotelDescription(descriptionData models.DescriptionData) {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("X-RapidAPI-Key", "5edba99934msh65cfd2d65b8987ap11e232jsneeea5dee9112")
+	req.Header.Add("X-RapidAPI-Key", "ba649e048bmsh7ad4f3caa0a03acp1b0912jsnf28f9b55b322")
 	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
 
 	res, _ := http.DefaultClient.Do(req)
@@ -175,7 +175,7 @@ func GetHotelPhotos(hotelPhotoData models.HotelPhotoData) {
 	url = fmt.Sprintf(url, hotelPhotoData.IdDetail)
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("X-RapidAPI-Key", "5edba99934msh65cfd2d65b8987ap11e232jsneeea5dee9112")
+	req.Header.Add("X-RapidAPI-Key", "ba649e048bmsh7ad4f3caa0a03acp1b0912jsnf28f9b55b322")
 	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
 
 	res, _ := http.DefaultClient.Do(req)
@@ -194,7 +194,7 @@ func GetHotelDetails(hotelDetails models.HotelDetailsData) {
 	url = fmt.Sprintf(url, hotelDetails.IdDetail, hotelDetails.CheckinDate, hotelDetails.CheckoutDate)
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("X-RapidAPI-Key", "5edba99934msh65cfd2d65b8987ap11e232jsneeea5dee9112")
+	req.Header.Add("X-RapidAPI-Key", "ba649e048bmsh7ad4f3caa0a03acp1b0912jsnf28f9b55b322")
 	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
 
 	res, _ := http.DefaultClient.Do(req)
@@ -295,7 +295,7 @@ func (c *HotelDetailsController) Get() {
 	}
 
 	for _, v := range hotelPhotos.Data.Photos {
-		hotelDetailsData.Photos = append(hotelDetailsData.Photos, v.PhotoUri)
+		hotelDetailsData.Photos = append(hotelDetailsData.Photos, "https://cf.bstatic.com"+v.PhotoUri)
 	}
 
 	c.Data["Data"] = hotelDetailsData

@@ -7,11 +7,8 @@ import (
 	beego "github.com/beego/beego/v2/server/web"
 )
 
-func a() string {
-	return "a"
-}
-
 func main() {
 	beego.AddFuncMap("until", utils.Until)
+	beego.AddFuncMap("getarr", utils.GetArrayElement)
 	beego.Run()
 }

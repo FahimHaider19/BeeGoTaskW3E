@@ -1,9 +1,5 @@
 package utils
 
-func a() string {
-	return "a"
-}
-
 func Until(count int) []int {
 	step := 1
 	if count < 0 {
@@ -32,4 +28,8 @@ func untilStep(start, stop, step int) []int {
 		v = append(v, i)
 	}
 	return v
+}
+
+func GetArrayElement(arr []string, key int) interface{} {
+	return arr[key]
 }

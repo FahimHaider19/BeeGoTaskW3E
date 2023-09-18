@@ -17,7 +17,7 @@ func fetchFlight(data models.FlightData) {
 	print(url)
 
 	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Add("X-RapidAPI-Key", "5edba99934msh65cfd2d65b8987ap11e232jsneeea5dee9112")
+	req.Header.Add("X-RapidAPI-Key", "ba649e048bmsh7ad4f3caa0a03acp1b0912jsnf28f9b55b322")
 	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
 	res, _ := http.DefaultClient.Do(req)
 	defer res.Body.Close()
@@ -72,8 +72,8 @@ func (c *FlightController) Get() {
 			return
 		}
 
-		flightData.Origin = origin
-		flightData.Destination = destination
+		flightData.Origin = c.GetString("location_from")
+		flightData.Destination = c.GetString("location_to")
 		flightData.Departure = departureDate
 		flightData.Return = returnDate
 		flightData.Flights = []models.FlightInfo{}
@@ -97,7 +97,7 @@ func (c *FlightController) Get() {
 
 			flightData.Flights = append(flightData.Flights, flightInfo)
 		}
-		c.Data["Flights"] = flightData.Flights
+		c.Data["Flight"] = flightData
 		c.TplName = "flight.tpl"
 	}
 }
