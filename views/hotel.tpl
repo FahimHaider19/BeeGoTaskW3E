@@ -152,6 +152,7 @@
 		</div>
     </div>
   </header>
+
   <div class="grid place-items-center">
     <div class="max-w-7xl z-0">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center grid-flow-row auto-rows-max py-6">
@@ -201,6 +202,7 @@
               </div>
             </div>
           {{end}}
+        </div>
     </div>
   </div>
 </body>
