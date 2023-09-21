@@ -10,14 +10,14 @@
 </head>
 
 <body>
-	<div class="flex flex-col items-center">
+	<div class="flex flex-col items-center mt-12">
 		<div class="-mb-5 rounded-md bg-gray-300 shadow-md w-full max-w-lg z-50">
 			<div class="block">
 			  <nav class="isolate flex divide-x divide-gray-200 rounded-lg shadow" aria-label="Tabs">
 				<!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
 				<button type="button" onclick="loadHotelUi()" class="text-gray-900 rounded-l-lg group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10" aria-current="page">
 				  <span>Hotels</span>
-				</buton>
+				</button>
 				<button type="button" onclick="loadFlightUi()"  class="text-gray-500 hover:text-gray-700 group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10">
 				  <span>Flights</span>
 				  <span aria-hidden="true" class="bg-transparent absolute inset-x-0 bottom-0 h-0.5"></span>
@@ -54,7 +54,7 @@
 				<input type="date" name="hotelCheckOutDate" id="hotelCheckOutDate" class="block w-full py-5  bg-gray-100 rounded-none rounded-r-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="John Smith">
 			</div>
 			<div class="absolute -bottom-6 w-full grid place-items-center">			
-				<button type="submit" class="w-full max-w-xl -mt-6 rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Search</button>
+				<button id="hotelSearchButton" type="button" onclick="searchHotel()" class="w-full max-w-xl -mt-6 rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Search</button>
 			</div>
 		</form>
 		
@@ -63,8 +63,8 @@
 				<div>
 				  <label for="itineraryType" class="sr-only">Itinerary Type</label>
 				  <select id="itineraryType" name="itineraryType" onChange="handleReturnDateInputField()" class="p-5 pl-[40%] md:pl-[47%] relative block w-full rounded-none rounded-t-md border-gray-300 bg-transparent focus:z-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-					<option value="ONE_WAY">One Way</option>
-					<option value="ROUND_TRIP">Round Trip</option>
+					<option value="one_way">One Way</option>
+					<option value="return">Return</option>
 				  </select>
 				</div>
 			</div>
@@ -113,11 +113,11 @@
 			</div>
 			
 			<div class="absolute -bottom-6 w-full grid place-items-center">			
-				<button type="submit" class="w-full max-w-xl -mt-6 rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Search</button>
+				<button type="button" onclick="searchFlight()" class="w-full max-w-xl -mt-6 rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Search</button>
 			</div>
 		</form>
 	</div>
-	<div id="hotel-div" class="hidden"></div>
-	<div id="flight-div" class="hidden"></div>
+	<div id="hotel-div" class=""></div>
+	<div id="flight-div" class="py-16"></div>
 </body>
 </html>

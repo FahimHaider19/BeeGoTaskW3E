@@ -58,6 +58,7 @@ type FlightData struct {
 	Destination string
 	Departure   string
 	Return      string
+	Type        string
 	Flights     []FlightInfo
 	JsonChan    chan string
 	ErrorChan   chan error

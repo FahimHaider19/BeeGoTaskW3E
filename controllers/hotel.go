@@ -17,7 +17,7 @@ func fetchHotel(data models.HotelData) {
 	print(url)
 
 	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Add("X-RapidAPI-Key", "ba649e048bmsh7ad4f3caa0a03acp1b0912jsnf28f9b55b322")
+	req.Header.Add("X-RapidAPI-Key", "6ec79a7124mshaacd4ba0db5d8a8p1b46ccjsn14fa09349bba")
 	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
 	res, _ := http.DefaultClient.Do(req)
 	defer res.Body.Close()
@@ -97,8 +97,10 @@ func (c *HotelController) Get() {
 			hotelData.Hotels = append(hotelData.Hotels, hotel)
 		}
 
-		c.Data["Hotels"] = hotelData.Hotels
-		c.TplName = "hotel.tpl"
+		// c.Data["Hotels"] = hotelData.Hotels
+		// c.TplName = "hotel.tpl"
+		c.Data["json"] = hotelData.Hotels
+		c.ServeJSON()
 	} else {
 		c.Data["error"] = models.ErrorMessage{
 			Message:    "No hotels found",
@@ -139,10 +141,10 @@ func (c *SearchHotelController) Get() {
 				SubMessage: "Please try again later",
 				Code:       500,
 			}
-			c.TplName = "error.tpl"
+			// c.TplName = "error.tpl"
 
 		} else {
-			c.Redirect("/hotel", 302)
+			c.Data["Json"] = hotelData
 		}
 
 	}
@@ -154,7 +156,7 @@ func GetHotelDescription(descriptionData models.DescriptionData) {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("X-RapidAPI-Key", "ba649e048bmsh7ad4f3caa0a03acp1b0912jsnf28f9b55b322")
+	req.Header.Add("X-RapidAPI-Key", "6ec79a7124mshaacd4ba0db5d8a8p1b46ccjsn14fa09349bba")
 	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
 
 	res, _ := http.DefaultClient.Do(req)
@@ -175,7 +177,7 @@ func GetHotelPhotos(hotelPhotoData models.HotelPhotoData) {
 	url = fmt.Sprintf(url, hotelPhotoData.IdDetail)
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("X-RapidAPI-Key", "ba649e048bmsh7ad4f3caa0a03acp1b0912jsnf28f9b55b322")
+	req.Header.Add("X-RapidAPI-Key", "6ec79a7124mshaacd4ba0db5d8a8p1b46ccjsn14fa09349bba")
 	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
 
 	res, _ := http.DefaultClient.Do(req)
@@ -194,7 +196,7 @@ func GetHotelDetails(hotelDetails models.HotelDetailsData) {
 	url = fmt.Sprintf(url, hotelDetails.IdDetail, hotelDetails.CheckinDate, hotelDetails.CheckoutDate)
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("X-RapidAPI-Key", "ba649e048bmsh7ad4f3caa0a03acp1b0912jsnf28f9b55b322")
+	req.Header.Add("X-RapidAPI-Key", "6ec79a7124mshaacd4ba0db5d8a8p1b46ccjsn14fa09349bba")
 	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
 
 	res, _ := http.DefaultClient.Do(req)
