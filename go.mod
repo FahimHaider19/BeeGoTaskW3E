@@ -2,9 +2,14 @@ module BeeGoTaskW3E
 
 go 1.21
 
-require github.com/beego/beego/v2 v2.1.1
+require github.com/beego/beego/v2 v2.1.2
 
 require github.com/smartystreets/goconvey v1.6.4
+
+require (
+	github.com/beego/beego v1.12.12 // indirect
+	golang.org/x/sync v0.3.0 // indirect
+)
 
 require (
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -24,6 +29,7 @@ require (
 	github.com/prometheus/common v0.42.0 // indirect
 	github.com/prometheus/procfs v0.10.1 // indirect
 	github.com/shiena/ansicolor v0.0.0-20200904210342-c7312218db18 // indirect
+	github.com/syndtr/goleveldb v1.0.0
 	golang.org/x/crypto v0.12.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/sys v0.11.0 // indirect

@@ -1,12 +1,14 @@
 package controllers
 
 import (
+	"BeeGoTaskW3E/global"
 	"BeeGoTaskW3E/models"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
+	"time"
 
 	beego "github.com/beego/beego/v2/server/web"
 )
@@ -44,9 +46,16 @@ func (c *FlightController) Get() {
 	departureDate := c.GetString("departure_date")
 	returnDate := c.GetString("return_date")
 	flightType := c.GetString("type")
+	key := "F:" + origin + destination + departureDate + returnDate + flightType
+	exist := global.Cached.IsExist(key)
+	fmt.Println(global.Cached)
+	fmt.Println(global.Cached.Get(key))
 
 	if origin == "" || destination == "" || departureDate == "" || (flightType == "return" && returnDate == "") {
 		c.TplName = "flight.tpl"
+	} else if exist {
+		c.Data["json"] = global.Cached.Get(key)
+		c.ServeJSON()
 	} else {
 		data := models.FlightStruct{}
 		jsonChan := make(chan string)
@@ -107,6 +116,8 @@ func (c *FlightController) Get() {
 		}
 		// c.Data["Flight"] = flightData
 		// c.TplName = "flight.tpl"
+
+		global.Cached.Put(key, flightData.Flights, 300*time.Second)
 		c.Data["json"] = flightData.Flights
 		c.ServeJSON()
 	}
@@ -122,7 +133,20 @@ func (c *SearchFlightController) Get() {
 	departureDate := c.GetString("departure_date")
 	returnDate := c.GetString("return_date")
 	flightType := c.GetString("type")
-	if origin != "" && destination != "" && departureDate != "" && returnDate != "" {
+	key := "FD:" + origin + destination + departureDate + returnDate + flightType
+	exist := global.Cached.IsExist(key)
+
+	if origin == "" || destination == "" || departureDate == "" || (flightType == "return" && returnDate == "") {
+		c.Data["Error"] = models.ErrorMessage{
+			Message:    "No flights found",
+			SubMessage: "Please provide location and dates properly",
+			Code:       500,
+		}
+		c.TplName = "error.tpl"
+	} else if exist {
+		c.Data["json"] = global.Cached.Get(key)
+		c.ServeJSON()
+	} else {
 		data := models.FlightStruct{}
 		jsonChan := make(chan string)
 		flightData := models.FlightData{}
@@ -142,6 +166,7 @@ func (c *SearchFlightController) Get() {
 			fmt.Println("Error unmarshaling JSON:", err)
 		}
 		c.Data["json"] = data
+		global.Cached.Put(key, flightData.Flights, 300*time.Second)
 	}
 	c.ServeJSON()
 }

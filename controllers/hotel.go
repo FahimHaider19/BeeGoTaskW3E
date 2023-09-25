@@ -1,12 +1,14 @@
 package controllers
 
 import (
+	"BeeGoTaskW3E/global"
 	"BeeGoTaskW3E/models"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"strings"
+	"time"
 
 	beego "github.com/beego/beego/v2/server/web"
 )
@@ -36,8 +38,18 @@ func (c *HotelController) Get() {
 	location := c.GetString("location")
 	hotelCheckInDate := c.GetString("hotelCheckInDate")
 	hotelCheckOutDate := c.GetString("hotelCheckOutDate")
+	key := "H:" + location + hotelCheckInDate + hotelCheckOutDate
+	exist := global.Cached.IsExist(key)
 
-	if location != "" && hotelCheckInDate != "" && hotelCheckOutDate != "" {
+	if location == "" && hotelCheckInDate == "" && hotelCheckOutDate == "" {
+		c.Data["json"] = models.ErrorMessage{
+			Message:    "No hotels found",
+			SubMessage: "Please prodive location and dates properly",
+			Code:       500,
+		}
+	} else if exist {
+		c.Data["json"] = global.Cached.Get(key)
+	} else {
 		data := models.HotelStruct{}
 		jsonChan := make(chan string)
 		hotelData := models.HotelData{}
@@ -62,7 +74,7 @@ func (c *HotelController) Get() {
 		} else if len(data.Data) == 0 {
 			c.Data["error"] = models.ErrorMessage{
 				Message:    "No hotels found",
-				SubMessage: "Please prodive location and dates properly",
+				SubMessage: "Please provide location and dates properly",
 				Code:       500,
 			}
 			c.TplName = "error.tpl"
@@ -100,16 +112,10 @@ func (c *HotelController) Get() {
 		// c.Data["Hotels"] = hotelData.Hotels
 		// c.TplName = "hotel.tpl"
 		c.Data["json"] = hotelData.Hotels
-		c.ServeJSON()
-	} else {
-		c.Data["error"] = models.ErrorMessage{
-			Message:    "No hotels found",
-			SubMessage: "Please prodive location and dates properly",
-			Code:       500,
-		}
-		c.TplName = "error.tpl"
-	}
+		global.Cached.Put(key, hotelData.Hotels, 300*time.Second)
 
+	}
+	c.ServeJSON()
 }
 
 type SearchHotelController struct {
@@ -120,8 +126,18 @@ func (c *SearchHotelController) Get() {
 	location := c.GetString("location")
 	hotelCheckInDate := c.GetString("hotelCheckInDate")
 	hotelCheckOutDate := c.GetString("hotelCheckOutDate")
+	key := "HS:" + location + hotelCheckInDate + hotelCheckOutDate
+	exist := global.Cached.IsExist(key)
 
-	if location != "" && hotelCheckInDate != "" && hotelCheckOutDate != "" {
+	if location == "" && hotelCheckInDate == "" && hotelCheckOutDate == "" {
+		c.Data["json"] = models.ErrorMessage{
+			Message:    "Hotel not found",
+			SubMessage: "Please prodive valid id",
+			Code:       500,
+		}
+	} else if exist {
+		c.Data["json"] = global.Cached.Get(key)
+	} else {
 		jsonChan := make(chan string)
 		errorChan := make(chan error)
 		hotelData := models.HotelData{}
@@ -145,8 +161,8 @@ func (c *SearchHotelController) Get() {
 
 		} else {
 			c.Data["Json"] = hotelData
+			global.Cached.Put(key, hotelData, 300*time.Second)
 		}
-
 	}
 	c.ServeJSON()
 }
@@ -218,88 +234,105 @@ func (c *HotelDetailsController) Get() {
 	param, _, _ = strings.Cut(param, "?")
 	checkinDate := c.GetString("checkin_date")
 	checkoutDate := c.GetString("checkout_date")
+	key := "HD:" + param + checkinDate + checkoutDate
+	exist := global.Cached.IsExist(key)
 
-	description := models.Description{}
-	descriptionChan := make(chan string)
-	descriptionData := models.DescriptionData{}
-	descriptionData.IdDetail = param
-	descriptionData.JsonChan = descriptionChan
-
-	go GetHotelDescription(descriptionData)
-	jsonString := <-descriptionChan
-
-	err := json.Unmarshal([]byte(jsonString), &description)
-	if err != nil {
+	if param == "" || checkinDate == "" || checkoutDate == "" {
 		c.Data["error"] = models.ErrorMessage{
-			Message:    "Error unmarshaling JSON",
-			SubMessage: "Please try again later",
+			Message:    "Hotel not found",
+			SubMessage: "Please prodive valid id",
 			Code:       500,
 		}
 		c.TplName = "error.tpl"
 		return
-	}
-
-	hotelDetailsResponse := models.HotelDetailsResponse{}
-	hotelDetailsData := models.HotelDetailsData{}
-	jsonChan := make(chan string)
-	hotelDetailsData.JsonChan = jsonChan
-	hotelDetailsData.Error = nil
-	hotelDetailsData.IdDetail = param
-	hotelDetailsData.CheckinDate = checkinDate
-	hotelDetailsData.CheckoutDate = checkoutDate
-	hotelDetailsData.Description = description.Data[0].Description
-
-	go GetHotelDetails(hotelDetailsData)
-	jsonString = <-jsonChan
-
-	err = json.Unmarshal([]byte(jsonString), &hotelDetailsResponse)
-	if err != nil {
-		c.Data["error"] = models.ErrorMessage{
-			Message:    "Error unmarshaling JSON",
-			SubMessage: "Please try again later",
-			Code:       500,
-		}
-		c.TplName = "error.tpl"
+	} else if exist {
+		c.Data["Data"] = global.Cached.Get(key)
+		c.TplName = "hotel-detail.tpl"
 		return
-	}
+	} else {
+		description := models.Description{}
+		descriptionChan := make(chan string)
+		descriptionData := models.DescriptionData{}
+		descriptionData.IdDetail = param
+		descriptionData.JsonChan = descriptionChan
 
-	hotelDetailsData.Id = hotelDetailsResponse.Data.BasicPropertyData[0].ID
-	hotelDetailsData.Name = hotelDetailsResponse.Data.BasicPropertyData[0].Name
-	hotelDetailsData.Photos = []string{}
-	hotelDetailsData.Reviews = []models.Review{}
-	for _, v := range hotelDetailsResponse.Data.FeaturedReview {
-		review := models.Review{}
-		review.GuestName = v.GuestName
-		review.NegativeText = v.NegativeText
-		review.PositiveText = v.PositiveText
-		review.Title = v.Title
-		review.UserAvatarURL = v.UserAvatarURL
-		hotelDetailsData.Reviews = append(hotelDetailsData.Reviews, review)
-	}
+		go GetHotelDescription(descriptionData)
+		jsonString := <-descriptionChan
 
-	hotelPhotosData := models.HotelPhotoData{}
-	hotelPhotosData.IdDetail = param
-	hotelPhotosData.JsonChan = jsonChan
-
-	go GetHotelPhotos(hotelPhotosData)
-	jsonString = <-hotelPhotosData.JsonChan
-
-	hotelPhotos := models.HotelPhotos{}
-	err = json.Unmarshal([]byte(jsonString), &hotelPhotos)
-	if err != nil {
-		c.Data["error"] = models.ErrorMessage{
-			Message:    "Error unmarshaling JSON",
-			SubMessage: "Please try again later",
-			Code:       500,
+		err := json.Unmarshal([]byte(jsonString), &description)
+		if err != nil {
+			c.Data["error"] = models.ErrorMessage{
+				Message:    "Error unmarshaling JSON",
+				SubMessage: "Please try again later",
+				Code:       500,
+			}
+			c.TplName = "error.tpl"
+			return
 		}
-		c.TplName = "error.tpl"
-		return
-	}
 
-	for _, v := range hotelPhotos.Data.Photos {
-		hotelDetailsData.Photos = append(hotelDetailsData.Photos, "https://cf.bstatic.com"+v.PhotoUri)
-	}
+		hotelDetailsResponse := models.HotelDetailsResponse{}
+		hotelDetailsData := models.HotelDetailsData{}
+		jsonChan := make(chan string)
+		hotelDetailsData.JsonChan = jsonChan
+		hotelDetailsData.Error = nil
+		hotelDetailsData.IdDetail = param
+		hotelDetailsData.CheckinDate = checkinDate
+		hotelDetailsData.CheckoutDate = checkoutDate
+		hotelDetailsData.Description = description.Data[0].Description
 
-	c.Data["Data"] = hotelDetailsData
-	c.TplName = "hotel-detail.tpl"
+		go GetHotelDetails(hotelDetailsData)
+		jsonString = <-jsonChan
+
+		err = json.Unmarshal([]byte(jsonString), &hotelDetailsResponse)
+		if err != nil {
+			c.Data["error"] = models.ErrorMessage{
+				Message:    "Error unmarshaling JSON",
+				SubMessage: "Please try again later",
+				Code:       500,
+			}
+			c.TplName = "error.tpl"
+			return
+		}
+
+		hotelDetailsData.Id = hotelDetailsResponse.Data.BasicPropertyData[0].ID
+		hotelDetailsData.Name = hotelDetailsResponse.Data.BasicPropertyData[0].Name
+		hotelDetailsData.Photos = []string{}
+		hotelDetailsData.Reviews = []models.Review{}
+		for _, v := range hotelDetailsResponse.Data.FeaturedReview {
+			review := models.Review{}
+			review.GuestName = v.GuestName
+			review.NegativeText = v.NegativeText
+			review.PositiveText = v.PositiveText
+			review.Title = v.Title
+			review.UserAvatarURL = v.UserAvatarURL
+			hotelDetailsData.Reviews = append(hotelDetailsData.Reviews, review)
+		}
+
+		hotelPhotosData := models.HotelPhotoData{}
+		hotelPhotosData.IdDetail = param
+		hotelPhotosData.JsonChan = jsonChan
+
+		go GetHotelPhotos(hotelPhotosData)
+		jsonString = <-hotelPhotosData.JsonChan
+
+		hotelPhotos := models.HotelPhotos{}
+		err = json.Unmarshal([]byte(jsonString), &hotelPhotos)
+		if err != nil {
+			c.Data["error"] = models.ErrorMessage{
+				Message:    "Error unmarshaling JSON",
+				SubMessage: "Please try again later",
+				Code:       500,
+			}
+			c.TplName = "error.tpl"
+			return
+		}
+
+		for _, v := range hotelPhotos.Data.Photos {
+			hotelDetailsData.Photos = append(hotelDetailsData.Photos, "https://cf.bstatic.com"+v.PhotoUri)
+		}
+
+		c.Data["Data"] = hotelDetailsData
+		global.Cached.Put(key, hotelDetailsData, 300*time.Second)
+		c.TplName = "hotel-detail.tpl"
+	}
 }

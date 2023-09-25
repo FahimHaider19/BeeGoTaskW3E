@@ -8,6 +8,10 @@ type MainController struct {
 	beego.Controller
 }
 
+func init() { // 2
+
+}
+
 func (c *MainController) Get() {
 	c.TplName = "index.tpl"
 }

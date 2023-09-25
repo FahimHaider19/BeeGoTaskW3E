@@ -10,8 +10,8 @@
 </head>
 
 <body>
-	<div class="flex flex-col items-center mt-12">
-		<div class="-mb-5 rounded-md bg-gray-300 shadow-md w-full max-w-lg z-50">
+	<div class="flex flex-col items-center mt-12 mx-4">
+		<div class="-mb-5 rounded-md bg-gray-300 shadow-md w-full max-w-[80%] sm:max-w-lg z-50">
 			<div class="block">
 			  <nav class="isolate flex divide-x divide-gray-200 rounded-lg shadow" aria-label="Tabs">
 				<!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
@@ -54,7 +54,7 @@
 				<input type="date" name="hotelCheckOutDate" id="hotelCheckOutDate" class="block w-full py-5  bg-gray-100 rounded-none rounded-r-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="John Smith">
 			</div>
 			<div class="absolute -bottom-6 w-full grid place-items-center">			
-				<button id="hotelSearchButton" type="button" onclick="searchHotel()" class="w-full max-w-xl -mt-6 rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Search</button>
+				<button id="hotelSearchButton" type="button" onclick="searchHotel()" class="w-full max-w-[80%] sm:max-w-xl -mt-6 rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Search</button>
 			</div>
 		</form>
 		
@@ -113,7 +113,7 @@
 			</div>
 			
 			<div class="absolute -bottom-6 w-full grid place-items-center">			
-				<button type="button" onclick="searchFlight()" class="w-full max-w-xl -mt-6 rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Search</button>
+				<button type="button" onclick="searchFlight()" class="w-full sm:max-w-xl max-w-[80%] -mt-6 rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Search</button>
 			</div>
 		</form>
 	</div>
