@@ -19,8 +19,8 @@ func fetchHotel(data models.HotelData) {
 	print(url)
 
 	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Add("X-RapidAPI-Key", "6ec79a7124mshaacd4ba0db5d8a8p1b46ccjsn14fa09349bba")
-	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
+	req.Header.Add("X-RapidAPI-Key", global.XRapidAPIKey)
+	req.Header.Add("X-RapidAPI-Host", global.XRapidAPIHost)
 	res, _ := http.DefaultClient.Do(req)
 	defer res.Body.Close()
 
@@ -47,6 +47,18 @@ func (c *HotelController) Get() {
 			SubMessage: "Please prodive location and dates properly",
 			Code:       500,
 		}
+	} else if hotelCheckInDate < time.Now().Format("2006-01-02") || hotelCheckOutDate < time.Now().Format("2006-01-02") {
+		c.Data["json"] = models.ErrorMessage{
+			Message:    "No hotels found",
+			SubMessage: "Please prodive valid dates",
+			Code:       500,
+		}
+	} else if hotelCheckInDate >= hotelCheckOutDate {
+		c.Data["json"] = models.ErrorMessage{
+			Message:    "Checkin date must be before checkout date",
+			SubMessage: "Please prodive valid dates",
+			Code:       500,
+		}
 	} else if exist {
 		c.Data["json"] = global.Cached.Get(key)
 	} else {
@@ -64,21 +76,20 @@ func (c *HotelController) Get() {
 
 		err := json.Unmarshal([]byte(jsonString), &data)
 		if err != nil {
-			c.Data["error"] = models.ErrorMessage{
-				Message:    "Error unmarshaling JSON",
+			c.Data["json"] = models.ErrorMessage{
+				Message:    "Error unmarshaling JSON." + err.Error(),
 				SubMessage: "Please try again later",
 				Code:       500,
 			}
-			c.TplName = "error.tpl"
+			c.ServeJSON()
 			return
 		} else if len(data.Data) == 0 {
-			c.Data["error"] = models.ErrorMessage{
+			c.Data["json"] = models.ErrorMessage{
 				Message:    "No hotels found",
-				SubMessage: "Please provide location and dates properly",
-				Code:       500,
+				SubMessage: "Please try other location and dates",
+				Code:       400,
 			}
-			c.TplName = "error.tpl"
-			return
+			c.ServeJSON()
 		}
 
 		hotelData.Location = location
@@ -131,8 +142,20 @@ func (c *SearchHotelController) Get() {
 
 	if location == "" && hotelCheckInDate == "" && hotelCheckOutDate == "" {
 		c.Data["json"] = models.ErrorMessage{
-			Message:    "Hotel not found",
-			SubMessage: "Please prodive valid id",
+			Message:    "No hotels found",
+			SubMessage: "Please prodive location and dates properly",
+			Code:       500,
+		}
+	} else if hotelCheckInDate < time.Now().Format("2006-01-02") || hotelCheckOutDate < time.Now().Format("2006-01-02") {
+		c.Data["json"] = models.ErrorMessage{
+			Message:    "No hotels found",
+			SubMessage: "Please prodive valid dates",
+			Code:       500,
+		}
+	} else if hotelCheckInDate >= hotelCheckOutDate {
+		c.Data["json"] = models.ErrorMessage{
+			Message:    "Checkin date must be before checkout date",
+			SubMessage: "Please prodive valid dates",
 			Code:       500,
 		}
 	} else if exist {
@@ -152,7 +175,7 @@ func (c *SearchHotelController) Get() {
 
 		err := json.Unmarshal([]byte(jsonString), &hotelData)
 		if err != nil {
-			c.Data["error"] = models.ErrorMessage{
+			c.Data["json"] = models.ErrorMessage{
 				Message:    "Error unmarshaling JSON",
 				SubMessage: "Please try again later",
 				Code:       500,
@@ -172,8 +195,8 @@ func GetHotelDescription(descriptionData models.DescriptionData) {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("X-RapidAPI-Key", "6ec79a7124mshaacd4ba0db5d8a8p1b46ccjsn14fa09349bba")
-	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
+	req.Header.Add("X-RapidAPI-Key", global.XRapidAPIKey)
+	req.Header.Add("X-RapidAPI-Host", global.XRapidAPIHost)
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -193,8 +216,8 @@ func GetHotelPhotos(hotelPhotoData models.HotelPhotoData) {
 	url = fmt.Sprintf(url, hotelPhotoData.IdDetail)
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("X-RapidAPI-Key", "6ec79a7124mshaacd4ba0db5d8a8p1b46ccjsn14fa09349bba")
-	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
+	req.Header.Add("X-RapidAPI-Key", global.XRapidAPIKey)
+	req.Header.Add("X-RapidAPI-Host", global.XRapidAPIHost)
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -212,8 +235,8 @@ func GetHotelDetails(hotelDetails models.HotelDetailsData) {
 	url = fmt.Sprintf(url, hotelDetails.IdDetail, hotelDetails.CheckinDate, hotelDetails.CheckoutDate)
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("X-RapidAPI-Key", "6ec79a7124mshaacd4ba0db5d8a8p1b46ccjsn14fa09349bba")
-	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
+	req.Header.Add("X-RapidAPI-Key", global.XRapidAPIKey)
+	req.Header.Add("X-RapidAPI-Host", global.XRapidAPIHost)
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -238,9 +261,25 @@ func (c *HotelDetailsController) Get() {
 	exist := global.Cached.IsExist(key)
 
 	if param == "" || checkinDate == "" || checkoutDate == "" {
-		c.Data["error"] = models.ErrorMessage{
+		c.Data["Data"] = models.ErrorMessage{
 			Message:    "Hotel not found",
 			SubMessage: "Please prodive valid id",
+			Code:       500,
+		}
+		c.TplName = "error.tpl"
+		return
+	} else if checkinDate < time.Now().Format("2006-01-02") || checkoutDate < time.Now().Format("2006-01-02") {
+		c.Data["Data"] = models.ErrorMessage{
+			Message:    "Checkin date must be before checkout date",
+			SubMessage: "Please prodive valid dates",
+			Code:       500,
+		}
+		c.TplName = "error.tpl"
+		return
+	} else if checkinDate >= checkoutDate {
+		c.Data["Data"] = models.ErrorMessage{
+			Message:    "Checkin date must be before checkout date",
+			SubMessage: "Please prodive valid dates",
 			Code:       500,
 		}
 		c.TplName = "error.tpl"
@@ -261,7 +300,7 @@ func (c *HotelDetailsController) Get() {
 
 		err := json.Unmarshal([]byte(jsonString), &description)
 		if err != nil {
-			c.Data["error"] = models.ErrorMessage{
+			c.Data["Data"] = models.ErrorMessage{
 				Message:    "Error unmarshaling JSON",
 				SubMessage: "Please try again later",
 				Code:       500,
@@ -285,7 +324,7 @@ func (c *HotelDetailsController) Get() {
 
 		err = json.Unmarshal([]byte(jsonString), &hotelDetailsResponse)
 		if err != nil {
-			c.Data["error"] = models.ErrorMessage{
+			c.Data["Data"] = models.ErrorMessage{
 				Message:    "Error unmarshaling JSON",
 				SubMessage: "Please try again later",
 				Code:       500,
@@ -318,7 +357,7 @@ func (c *HotelDetailsController) Get() {
 		hotelPhotos := models.HotelPhotos{}
 		err = json.Unmarshal([]byte(jsonString), &hotelPhotos)
 		if err != nil {
-			c.Data["error"] = models.ErrorMessage{
+			c.Data["Data"] = models.ErrorMessage{
 				Message:    "Error unmarshaling JSON",
 				SubMessage: "Please try again later",
 				Code:       500,

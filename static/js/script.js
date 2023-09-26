@@ -49,10 +49,6 @@ function loadFlightUi() {
         document.getElementById('hotel-div').classList.add('hidden')
 }
 
-function getHotels() {
-    
-}
-
 function handleReturnDateInputField() {
     if(document.getElementById('itineraryType').value == 'return') {
         document.getElementById('return_date_div').classList.remove('hidden')
@@ -69,6 +65,19 @@ async function searchHotel() {
     var checkInDate = document.getElementById('hotelCheckInDate').value
     var checkOutDate = document.getElementById('hotelCheckOutDate').value
     var hotels = []
+
+    if(location == '' || checkInDate == '' || checkOutDate == '') {
+        alert('Please fill all the fields')
+        return
+    }
+    else if(checkInDate >= checkOutDate) {
+        alert('Check-in date must be before check-out date')
+        return
+    }
+    else if(checkInDate < new Date().toISOString().slice(0, 10)) {
+        alert('Checkin date must be after today')
+        return
+    }
 
     var temp = `<div class="grid place-items-center mt-12">
     <div class="max-w-7xl z-0">
@@ -127,7 +136,14 @@ async function searchHotel() {
         console.log(result)
         hotels = JSON.parse(result);
         console.log(hotels);
+        if (hotels.hasOwnProperty('Message')) {
+            console.log(hotels.Message)
+            alert(hotels.Message + ". " + hotels.SubMessage)
+            document.getElementById('hotel-div').innerHTML = ''
+            return
+        }
     } catch (error) {
+        document.getElementById('hotel-div').innerHTML = ''
         console.error(error);
     }
         
@@ -182,6 +198,7 @@ async function searchHotel() {
         
         document.getElementById('hotel-div').innerHTML = html
       } catch (error) {
+          document.getElementById('hotel-div').innerHTML = ''
           console.error(error);
       }
 }
@@ -195,6 +212,27 @@ async function searchFlight(){
     let return_date = document.getElementById('return_date').value
     let url = ""
     let flights = []
+
+    if(from == '' || to == '' || departure_date == '') {
+        alert('Please fill all the fields')
+        return
+    }
+    else if(type == 'return' && return_date == '') {
+        alert('Please fill all the fields')
+        return
+    }
+    else if(location_from == location_to) {
+        alert('Departure and arrival locations must be different')
+        return
+    }
+    else if(type == 'one_way' && departure_date < new Date().toISOString().slice(0, 10)) {
+        alert('Departure date must be after today')
+        return
+    }
+    else if(type == 'return' &&departure_date >= return_date) {
+        alert('Departure date must be before return date')
+        return
+    }
 
     if(type == 'one_way') 
         url = `/flight?type=one-way&location_from=${from}&location_to=${to}&departure_date=${departure_date}&page=1&country_flag=us`
@@ -235,7 +273,14 @@ async function searchFlight(){
         const result = await response.text();
         console.log(result);
         flights = JSON.parse(result);
+        if (flights.hasOwnProperty('Message')) {
+            console.log(flights.Message)
+            alert(flights.Message + ". " + flights.SubMessage)
+            document.getElementById('flight-div').innerHTML = ''
+            return
+        }
     } catch (error) {
+        document.getElementById('flight-div').innerHTML = ''
         console.error(error);
     }
 
@@ -279,8 +324,7 @@ async function searchFlight(){
         document.getElementById('flight-div').innerHTML = html
 
     } catch (error) {
+        document.getElementById('flight-div').innerHTML = ''
         console.error(error);
     }
-
-
 }

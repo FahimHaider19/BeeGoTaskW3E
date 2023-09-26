@@ -25,8 +25,8 @@ func fetchFlight(data models.FlightData) {
 	print(url)
 
 	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Add("X-RapidAPI-Key", "6ec79a7124mshaacd4ba0db5d8a8p1b46ccjsn14fa09349bba")
-	req.Header.Add("X-RapidAPI-Host", "booking-com13.p.rapidapi.com")
+	req.Header.Add("X-RapidAPI-Key", global.XRapidAPIKey)
+	req.Header.Add("X-RapidAPI-Host", global.XRapidAPIHost)
 	res, _ := http.DefaultClient.Do(req)
 	defer res.Body.Close()
 
@@ -51,11 +51,21 @@ func (c *FlightController) Get() {
 	fmt.Println(global.Cached)
 	fmt.Println(global.Cached.Get(key))
 
-	if origin == "" || destination == "" || departureDate == "" || (flightType == "return" && returnDate == "") {
-		c.TplName = "flight.tpl"
+	if origin == "" || destination == "" || departureDate == "" || flightType == "" || (flightType == "return" && returnDate == "") {
+		var subMessage string
+		if flightType == "return" {
+			subMessage = "Input field: From(Location), To(Location), Departure, Return Date, Flight Type cannot be empty."
+		} else {
+			subMessage = "Input field: From(Location), To(Location), Departure, Flight Type cannot be empty."
+		}
+
+		c.Data["json"] = models.ErrorMessage{
+			Message:    "Fields are empty",
+			SubMessage: subMessage,
+			Code:       500,
+		}
 	} else if exist {
 		c.Data["json"] = global.Cached.Get(key)
-		c.ServeJSON()
 	} else {
 		data := models.FlightStruct{}
 		jsonChan := make(chan string)
@@ -73,20 +83,19 @@ func (c *FlightController) Get() {
 
 		err := json.Unmarshal([]byte(jsonString), &data)
 		if err != nil {
-			c.Data["error"] = models.ErrorMessage{
+			c.Data["json"] = models.ErrorMessage{
 				Message:    "Error unmarshaling JSON",
 				SubMessage: "Please try again later",
 				Code:       500,
 			}
-			c.TplName = "error.tpl"
+			c.ServeJSON()
 		} else if len(data.FlightStruct.Flights) == 0 {
-			c.Data["Error"] = models.ErrorMessage{
+			c.Data["json"] = models.ErrorMessage{
 				Message:    "No flights found",
 				SubMessage: "Please prodive location and dates properly",
-				Code:       500,
+				Code:       400,
 			}
-			c.TplName = "error.tpl"
-			return
+			c.ServeJSON()
 		}
 
 		flightData.Origin = c.GetString("location_from")
@@ -114,13 +123,11 @@ func (c *FlightController) Get() {
 
 			flightData.Flights = append(flightData.Flights, flightInfo)
 		}
-		// c.Data["Flight"] = flightData
-		// c.TplName = "flight.tpl"
 
 		global.Cached.Put(key, flightData.Flights, 300*time.Second)
 		c.Data["json"] = flightData.Flights
-		c.ServeJSON()
 	}
+	c.ServeJSON()
 }
 
 type SearchFlightController struct {
@@ -137,15 +144,13 @@ func (c *SearchFlightController) Get() {
 	exist := global.Cached.IsExist(key)
 
 	if origin == "" || destination == "" || departureDate == "" || (flightType == "return" && returnDate == "") {
-		c.Data["Error"] = models.ErrorMessage{
-			Message:    "No flights found",
-			SubMessage: "Please provide location and dates properly",
+		c.Data["json"] = models.ErrorMessage{
+			Message:    "Fields are empty",
+			SubMessage: "Input field: From(Location), To(Location), Departure, Return Date, Flight Type cannot be empty.",
 			Code:       500,
 		}
-		c.TplName = "error.tpl"
 	} else if exist {
 		c.Data["json"] = global.Cached.Get(key)
-		c.ServeJSON()
 	} else {
 		data := models.FlightStruct{}
 		jsonChan := make(chan string)
@@ -163,7 +168,11 @@ func (c *SearchFlightController) Get() {
 
 		err := json.Unmarshal([]byte(jsonString), &data)
 		if err != nil {
-			fmt.Println("Error unmarshaling JSON:", err)
+			c.Data["json"] = models.ErrorMessage{
+				Message:    "Error unmarshaling JSON",
+				SubMessage: "Please try again later",
+				Code:       500,
+			}
 		}
 		c.Data["json"] = data
 		global.Cached.Put(key, flightData.Flights, 300*time.Second)
