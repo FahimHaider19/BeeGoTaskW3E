@@ -317,7 +317,9 @@ func (c *HotelDetailsController) Get() {
 		hotelDetailsData.IdDetail = param
 		hotelDetailsData.CheckinDate = checkinDate
 		hotelDetailsData.CheckoutDate = checkoutDate
-		hotelDetailsData.Description = description.Data[0].Description
+		if len(description.Data) > 0 {
+			hotelDetailsData.Description = description.Data[0].Description
+		}
 
 		go GetHotelDetails(hotelDetailsData)
 		jsonString = <-jsonChan

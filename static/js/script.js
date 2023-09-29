@@ -60,17 +60,22 @@ function handleReturnDateInputField() {
     }
 }
 
+function dateFormat(date) {
+    temp = date.split('/')
+    return temp[2] + '-' + temp[0] + '-' + temp[1]
+}
+
 async function searchHotel() {
     var location = document.getElementById('location').value
-    var checkInDate = document.getElementById('hotelCheckInDate').value
-    var checkOutDate = document.getElementById('hotelCheckOutDate').value
+    var checkInDate = dateFormat(document.getElementById('hotelCheckInDate').value)
+    var checkOutDate = dateFormat(document.getElementById('hotelCheckOutDate').value)
     var hotels = []
 
     if(location == '' || checkInDate == '' || checkOutDate == '') {
         alert('Please fill all the fields')
         return
     }
-    else if(checkInDate >= checkOutDate) {
+    else if(checkInDate >= dateFormat(checkOutDate)) {
         alert('Check-in date must be before check-out date')
         return
     }
@@ -85,7 +90,7 @@ async function searchHotel() {
     
     for(let i=0; i<6; i++) temp+= `
     <!-- placeholder card -->
-            <div class="p-2 bg-gray-100 w-full h-full animate-pulse">
+            <div class="p-2 bg-gray-100 max-w-xs w-full h-full animate-pulse">
                 <div class="bg-white max-w-md h-full">
                     <div class="relative p-2">
                         <img class="border-8 border-white h-64 w-full object-cover bg-gray-200">
@@ -113,13 +118,13 @@ async function searchHotel() {
                         <div class="flex justify-between">
                             <div class="flex gap-2">
                                 <div class="flex gap-1">
-                                    <div class="h-4 w-24 rounded-lg bg-gray-200"></div>
+                                    <div class="h-4 w-20 rounded-lg bg-gray-200"></div>
                                 </div>
                                 <div class="flex gap-1">
-                                    <div class="h-4 w-32 rounded-lg bg-gray-200"></div>
+                                    <div class="h-4 w-24 rounded-lg bg-gray-200"></div>
                                 </div>
                             </div>
-                            <div><div class="h-4 w-20 rounded-lg bg-gray-200"></div></div>
+                            <div><div class="h-4 w-16 rounded-lg bg-gray-200"></div></div>
                         </div>
                     </div>
                 </div>
@@ -155,14 +160,14 @@ async function searchHotel() {
         for(let hotel of hotels) {
             html+= `
                     <!-- card -->
-                    <div class="max-w-xs h-full rounded overflow-hidden shadow-lg"> 
-                        <div class="w-full relative">
-                            <img class="w-full h-80" src=${hotel.Photo} alt="Sunset in the mountains"/>
+                    <div class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg"> 
+                        <a href="/hotel/details/${hotel.IdDetail}?checkin_date=${hotel.CheckinDate}&checkout_date=${hotel.CheckoutDate}" class="w-full relative">
+                            <img class="w-full h-60 object-cover" src=${hotel.Photo} alt="Sunset in the mountains"/>
                             <div class="absolute py-1 px-2 bg-white bg-opacity-50 bottom-2 left-2 rounded-md">
                                 <span class="font-bold">${hotel.Price}$</span>
                                 <span class="text-sm">per night</span>
                             </div>
-                        </div>
+                        </a>
                         
                         <div class="p-4 flex flex-col justify-between">
                             <div class="flex font-bold text-xs text-gray-700">`
@@ -172,7 +177,8 @@ async function searchHotel() {
                                 `<div class="font-bold text-xs mb-2 text-gray-700">${hotel.Livingroom} Livingroom .</div>`
                                 if(hotel.Kitchen) html+=
                                 `<div class="font-bold text-xs mb-2 text-gray-700">${hotel.Kitchen} Kitchen .</div>`
-                    html+= `</div><div class="font-bold text-xl mb-2">${hotel.Name}</div>
+                    html+= `</div>
+                            <a href="/hotel/details/${hotel.IdDetail}?checkin_date=${hotel.CheckinDate}&checkout_date=${hotel.CheckoutDate}" class="font-medium text-lg mb-2 truncate">${hotel.Name}</a>
                             <div class="flex items-center py-1">
                                 <span class="font-bold pr-1 text-green-600">${hotel.Rating}</span>`
                 
@@ -187,7 +193,7 @@ async function searchHotel() {
                                 <span class="text-gray-700 text-xs px-2 truncate">${hotel.Location}, ${hotel.City}</span>
                             </div>
                             <a href="/hotel/details/${hotel.IdDetail}?checkin_date=${hotel.CheckinDate}&checkout_date=${hotel.CheckoutDate}" class="flex justify-center py-2">
-                                <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">View Details</button>
+                                <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded bottom-0">View Details</button>
                             </a>
                         </div>
                     </div>`
@@ -208,8 +214,8 @@ async function searchFlight(){
     console.log(type)
     let from = document.getElementById('location_from').value
     let to = document.getElementById('location_to').value
-    let departure_date = document.getElementById('departure_date').value
-    let return_date = document.getElementById('return_date').value
+    let departure_date = dateFormat(document.getElementById('departure_date').value)
+    let return_date = dateFormat(document.getElementById('return_date').value)
     let url = ""
     let flights = []
 
@@ -286,7 +292,7 @@ async function searchFlight(){
 
     try {
         let html = 
-        `<div class="grid grid-cols-1 gap-6 place-items-center">`
+        `<div class="grid grid-cols-1 gap-6 place-items-center px-5">`
         for(let flight of flights) {
             html+= `
             <div class="bg-gray-50 shadow sm:rounded-lg px-4 sm:px-6 max-w-7xl w-full">
