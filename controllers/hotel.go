@@ -335,8 +335,10 @@ func (c *HotelDetailsController) Get() {
 			return
 		}
 
-		hotelDetailsData.Id = hotelDetailsResponse.Data.BasicPropertyData[0].ID
-		hotelDetailsData.Name = hotelDetailsResponse.Data.BasicPropertyData[0].Name
+		if len(hotelDetailsResponse.Data.BasicPropertyData) > 0 {
+			hotelDetailsData.Id = hotelDetailsResponse.Data.BasicPropertyData[0].ID
+			hotelDetailsData.Name = hotelDetailsResponse.Data.BasicPropertyData[0].Name
+		}
 		hotelDetailsData.Photos = []string{}
 		hotelDetailsData.Reviews = []models.Review{}
 		for _, v := range hotelDetailsResponse.Data.FeaturedReview {
